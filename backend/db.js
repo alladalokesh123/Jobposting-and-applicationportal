@@ -8,7 +8,7 @@ const db = new sqlite3.Database(dbFile, (err) => {
     console.error("❌ SQLite error:", err.message);
     process.exit(1);
   } else {
-    console.log("✅ Connected to SQLite:", dbFile);
+    console.log("Connected to SQLite:", dbFile);
 
     // Create tables if not exists
     db.run(`CREATE TABLE IF NOT EXISTS candidates (

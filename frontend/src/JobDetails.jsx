@@ -5,7 +5,6 @@ function JobDetails({ jobId }) {
   const [applied, setApplied] = useState([]);
   const [selectedCandidateId, setSelectedCandidateId] = useState("");
 
-  // Fetch job info + applied candidates
   useEffect(() => {
     fetch(`http://localhost:5000/api/jobs/${jobId}`)
       .then(res => res.json())
@@ -16,7 +15,6 @@ function JobDetails({ jobId }) {
       .then(data => setApplied(data));
   }, [jobId]);
 
-  // Handle Apply
   const handleApply = () => {
     if (!selectedCandidateId) {
       alert("Enter a candidate ID to apply");
@@ -32,7 +30,6 @@ function JobDetails({ jobId }) {
       .then(() => {
         alert("Application submitted!");
         setSelectedCandidateId("");
-        // refresh applied candidates
         fetch(`http://localhost:5000/api/jobs/${jobId}/candidates`)
           .then(res => res.json())
           .then(data => setApplied(data));

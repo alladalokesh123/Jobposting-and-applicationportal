@@ -1,20 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const db = require("./db"); // make sure db.js sets up SQLite connection
+const db = require("./db"); 
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Root test
 app.get("/", (req, res) => {
   res.send("Backend server is running!");
 });
 
-//
-// ------------------ Candidates ------------------
-//
+
+// Candidates 
+
 app.get("/api/candidates", (req, res) => {
   db.all("SELECT * FROM candidates", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -34,9 +33,8 @@ app.post("/api/candidates", (req, res) => {
   );
 });
 
-//
-// ------------------ Jobs ------------------
-//
+// Jobs
+
 app.get("/api/jobs", (req, res) => {
   db.all("SELECT * FROM jobs", [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -44,7 +42,7 @@ app.get("/api/jobs", (req, res) => {
   });
 });
 
-// ✅ Get a single job by ID
+// Get a single job by ID
 app.get("/api/jobs/:jobId", (req, res) => {
   const { jobId } = req.params;
   db.get("SELECT * FROM jobs WHERE id = ?", [jobId], (err, row) => {
@@ -72,9 +70,7 @@ app.post("/api/jobs", (req, res) => {
   );
 });
 
-//
-// ------------------ Applications ------------------
-//
+// Applications 
 
 // Candidate applies for a job
 app.post("/api/jobs/:jobId/apply", (req, res) => {
@@ -104,9 +100,9 @@ app.get("/api/jobs/:jobId/candidates", (req, res) => {
   });
 });
 
-//
-// ------------------ Start Server ------------------
-//
+
+//  Start Server
+
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Backend running at http://localhost:${PORT}`);
